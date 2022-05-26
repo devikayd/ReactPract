@@ -4,6 +4,7 @@ import PlaceForm from '../components/PlaceForm'
 const AddPlaces = () => {
   return (
     <PlaceForm/>
+    
   )
 }
 

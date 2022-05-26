@@ -1,6 +1,7 @@
 import { View, Text, Button, Alert, Image, StyleSheet } from 'react-native'
 import { launchCameraAsync, useCameraPermissions, PermissionStatus } from 'expo-image-picker'
 import { useState } from 'react';
+import ButtonOutline from './Button/ButtonOutline';
 
 
 const ImagePicker = () => {
@@ -45,7 +46,7 @@ const ImagePicker = () => {
     setPickedImage(image.uri)
   }
 
-  let imagePicked = <Text > No image is Taken yet </Text>
+  let imagePicked = <Text style={styles.text} > No image is Taken yet </Text>
 
   if (pickedImage) {
     imagePicked = <Image style={styles.imagePreview} source={{ uri: pickedImage }} />
@@ -56,7 +57,9 @@ const ImagePicker = () => {
       <View style={styles.noImage }>
         {imagePicked}
       </View>
-      <Button title="Take Image" onPress={imagePickerHander} />
+      <ButtonOutline onPress={imagePickerHander} color='#d4a373' size={24} icon='camera'>
+      Take Image
+      </ButtonOutline>
     </View>
   )
 }
@@ -66,7 +69,7 @@ export default ImagePicker
 const styles = StyleSheet.create({
   noImage: {
     height: 200,
-    width: 400,
+    width: 363,
     marginTop:10,
     backgroundColor:'#b5e48c',
     justifyContent:'center',
@@ -76,7 +79,10 @@ const styles = StyleSheet.create({
   },
   imagePreview:{
     height: 200,
-    width: 400,
+    width: 363,
     borderRadius:5,
+  },
+  text:{
+    color:'#344e41'
   }
 })
