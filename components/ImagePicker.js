@@ -4,7 +4,7 @@ import { useState } from 'react';
 import ButtonOutline from './Button/ButtonOutline';
 
 
-const ImagePicker = () => {
+const ImagePicker = ({onTakeImage}) => {
 
   // for ios stumulator ...import useCameraPermissions and PermissionStatus hooks
 
@@ -43,7 +43,8 @@ const ImagePicker = () => {
       quality: 0.6
     })
 
-    setPickedImage(image.uri)
+    setPickedImage(image.uri);
+    onTakeImage(image.uri);
   }
 
   let imagePicked = <Text style={styles.text} > No image is Taken yet </Text>
