@@ -32,7 +32,10 @@ const LocationPicker = ({ onPickLocation }) => {
     useEffect(() => {
         async function handleLocation() {
             if (pickedUserLocation) {
-                const address = await getAddress(pickedUserLocation.lat, pickedUserLocation.lng);
+                const address = await getAddress(
+                    pickedUserLocation.lat,
+                    pickedUserLocation.lng
+                );
                 onPickLocation({ ...pickedUserLocation, address: address });
             }
         }
@@ -61,13 +64,10 @@ const LocationPicker = ({ onPickLocation }) => {
         }
 
         const currentLocation = await getCurrentPositionAsync();
-
         setPickedUserLocation({
             lat: currentLocation.coords.latitude,
             lng: currentLocation.coords.longitude
         })
-
-        console.log(currentLocation);
     }
 
     function getLocationOnMap() {
@@ -78,7 +78,11 @@ const LocationPicker = ({ onPickLocation }) => {
 
     if (pickedUserLocation) {
         locationPreview = (
-            <Image source={{ uri: getLocationPreview(pickedUserLocation.lat, pickedUserLocation.lng) }} />
+            <Image
+                style={styles.image}
+                source={{
+                    uri: getLocationPreview(pickedUserLocation.lat, pickedUserLocation.lng)
+                }} />
         )
     }
 
@@ -92,7 +96,6 @@ const LocationPicker = ({ onPickLocation }) => {
                     Locate User
                 </ButtonOutline>
                 <ButtonOutline icon='map' color='#d4a373' size={24} onPress={getLocationOnMap} > Pick On Map</ButtonOutline>
-
             </View>
         </View>
     )
@@ -116,5 +119,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignContent: 'center'
+    },
+    image: {
+        width: '100%',
+        height: '100%',
     }
 })

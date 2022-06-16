@@ -1,4 +1,4 @@
-import { View, Text, Button, Alert, Image, StyleSheet } from 'react-native'
+import { View, Text, Alert, Image, StyleSheet } from 'react-native'
 import { launchCameraAsync, useCameraPermissions, PermissionStatus } from 'expo-image-picker'
 import { useState } from 'react';
 import ButtonOutline from './Button/ButtonOutline';
@@ -30,11 +30,12 @@ const ImagePicker = ({onTakeImage}) => {
 
     // checking permission for ios
 
-    const hasPermisssion = await verifyPermission();
+    // const hasPermisssion = await verifyPermission();
 
-    if (!hasPermisssion) {
-      return;
-    }
+    // if (!hasPermisssion) {
+    //   return;
+    // }
+    
     // for android
 
     const image = await launchCameraAsync({

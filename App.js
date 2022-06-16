@@ -1,16 +1,37 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { useEffect, useState } from 'react';
+import AppLoading from 'expo-app-loading';
+
+
+
 
 import AllPlacesScreen from './screens/AllPlacesScreen';
 import IconButton from './components/Button/IconButton';
 import AddPlaces from './screens/AddPlaces'
 import MapScreen from './screens/MapScreen'
+import { init } from './utils/Database';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+
+  const [dbInitialized, setDbInitialized] = useState(false);
+
+  useEffect(() => {
+    init()
+      .then(() => {
+        setDbInitialized(true)
+      })
+      .catch((error) => { console.log('error in db init', error) })
+  }, [])
+
+  if (!dbInitialized) {
+    return <AppLoading />
+  }
+
   return (
     <>
       <StatusBar style='dark' />
@@ -24,8 +45,8 @@ export default function App() {
             contentStyle: { backgroundColor: '#caf0f8' },
           }}>
 
-          <Stack.Screen name='All Places' 
-          component={AllPlacesScreen}
+          <Stack.Screen name='All Places'
+            component={AllPlacesScreen}
             options={({ navigation }) => ({
               title: 'All places',
               headerRight: ({ tintColor }) => (
@@ -33,21 +54,21 @@ export default function App() {
                   onPress={() => navigation.navigate('Add Places')} />
               )
             })}
-             />
-
-          <Stack.Screen name='Add Places' 
-          component={AddPlaces} 
-          options={{
-            title: 'Add a place'
-          }} 
           />
 
-          <Stack.Screen name='Map' 
-          component={MapScreen} 
-           options={{
-            title: ' Select Location'
-          }}/> 
-          
+          <Stack.Screen name='Add Places'
+            component={AddPlaces}
+            options={{
+              title: 'Add a place'
+            }}
+          />
+
+          <Stack.Screen name='Map'
+            component={MapScreen}
+            options={{
+              title: ' Select Location'
+            }} />
+
         </Stack.Navigator>
       </NavigationContainer>
     </>

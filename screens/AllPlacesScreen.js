@@ -1,5 +1,5 @@
 import { useIsFocused } from '@react-navigation/native';
-import { useEffect } from 'react';
+import { useEffect, useState} from 'react';
 import PlaceList from '../components/PlaceList'
 
 const AllPlacesScreen = ({route}) => {
@@ -12,11 +12,11 @@ const AllPlacesScreen = ({route}) => {
     if(isFocused && route.params){
       setLocatedPlace ( currentplace => [...currentplace, route.params.place])
     }
-  },[ isFocused, routes])
+  },[ isFocused, route])
   
   return (
     
-      <PlaceList />
+      <PlaceList places={locatedPlace} />
   )
 }
 

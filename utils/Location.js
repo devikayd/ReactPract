@@ -8,7 +8,7 @@ const imagePreviewUrl = `https://maps.googleapis.com/maps/api/staticmap?center=$
 return imagePreviewUrl;
 }
 
-export async function getAddress(lat, long){
+export async function getAddress(lat, lng){
 
     const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${GOOGLE_API_KEY}`
 
@@ -19,13 +19,7 @@ export async function getAddress(lat, long){
     }
 
     const data = await response.json();
-    console.log('response: ', respose);
-    console.log('data: ', data);
-
     const address = data.result[0].formatted_address;
-
-    console.log('address', address);
-
     return address;
 
 }
