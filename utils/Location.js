@@ -1,4 +1,4 @@
-const GOOGLE_API_KEY = KEY
+const GOOGLE_API_KEY = 'AIzaSyCeSMIiyzG-9dO9eosc7PR8N9tIyQ2bVho'
 
 
 export function getLocationPreview(lat, lng){

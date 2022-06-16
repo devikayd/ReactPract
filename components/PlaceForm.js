@@ -18,6 +18,7 @@ const PlaceForm = () => {
 
     function savePlaceFormHandler() { 
          const placeData = new Places(textInput, takedImage, pickedLocation)
+         onCreatePlace(placeData);
     }
 
     function takeImageHandler(imageUri) {
