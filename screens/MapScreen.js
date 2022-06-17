@@ -1,62 +1,89 @@
-import MapView, { Marker } from 'react-native-maps'
-import { StyleSheet, Alert } from 'react-native'
-import { useState, useLayoutEffect, useCallback } from 'react'
-
+import { useCallback, useLayoutEffect, useState } from 'react';
+import { Alert, StyleSheet } from 'react-native';
+import MapView, { Marker } from 'react-native-maps';
 import IconButton from '../components/Button/IconButton';
 
-const MapScreen = ({ navigation }) => {
 
-  const [selectedLocationOnMap, setSelectedLocatioOnMap] = useState();
+function Map({ navigation, route }) {
+  const [selectedLocation, setSelectedLocation] = useState();
+  
+  const initialLocation = route.params && {
+    lat: route.params.initialLat,
+    lng: route.params.initialLng,
+  };
 
   const region = {
     latitude: 37.78,
     longitude: -122.43,
     latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421
-  }
+    longitudeDelta: 0.0421,
+  };
 
-  function selectLocationHandeler(event) {
+  function selectLocationHandler(event) {
+    if(initialLocation){
+      return;
+    }
 
     const lat = event.nativeEvent.coordinate.latitude;
     const lng = event.nativeEvent.coordinate.longitude;
 
-    setSelectedLocatioOnMap({ lat: lat, lng: lng });
+    setSelectedLocation({ lat: lat, lng: lng });
   }
 
   const savePickedLocationHandler = useCallback(() => {
-
-    if (!selectedLocationOnMap) {
-      Alert.alert('No location selected', 'Pick a location first');
+    if (!selectedLocation) {
+      Alert.alert(
+        'No location picked!',
+        'You have to pick a location (by tapping on the map) first!'
+      );
       return;
     }
+
     navigation.navigate('Add Places', {
-      pickedLat: selectedLocationOnMap.lat,
-      pickedLng: selectedLocationOnMap.lng
+      pickedLat: selectedLocation.lat,
+      pickedLng: selectedLocation.lng,
     });
-  },[navigation, selectedLocationOnMap]
-  );
+  }, [navigation, selectedLocation]);
 
   useLayoutEffect(() => {
+    if(initialLocation){
+      return;
+    }
     navigation.setOptions({
-      headerRight: ({ tintColor }) =>
-        <IconButton color={tintColor} size={24} icon='save' onPress={savePickedLocationHandler} />
-    })
-  }, [navigation, savePickedLocationHandler])
+      headerRight: ({ tintColor }) => (
+        <IconButton
+          icon="save"
+          size={24}
+          color={tintColor}
+          onPress={savePickedLocationHandler}
+        />
+      ),
+    });
+  }, [navigation, savePickedLocationHandler, initialLocation]);
 
   return (
-    <MapView initialRegion={region} onPress={selectLocationHandeler} style={styles.map}>
-      {selectedLocationOnMap && (
-        <Marker coordinate={{ latitude: selectedLocationOnMap.lat, longitude: selectedLocationOnMap.lng }} 
-        title='Picked Location' />
+    <MapView
+      style={styles.map}
+      initialRegion={region}
+      onPress={selectLocationHandler}
+    >
+      {selectedLocation && (
+        <Marker
+          title="Picked Location"
+          coordinate={{
+            latitude: selectedLocation.lat,
+            longitude: selectedLocation.lng,
+          }}
+        />
       )}
     </MapView>
-  )
+  );
 }
 
-export default MapScreen
+export default Map;
 
-const styles = StyleSheet.create({
-  map: {
-    flex: 1
+const styles= StyleSheet.create({
+  map:{
+    flex:1
   }
 })

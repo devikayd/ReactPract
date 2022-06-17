@@ -1,16 +1,16 @@
 import { Pressable, Text, StyleSheet } from 'react-native'
 import React from 'react'
 
-const Button = ({ children, onPress }) => {
+function Button({ onPress, children }) {
     return (
-        <Pressable
-            onPress={onPress}
-            style={({ pressed }) => [styles.button, pressed && styles.pressed]}>
-            <Text style={styles.text}>{children}</Text>
-
-        </Pressable>
-    )
-}
+      <Pressable
+        style={({ pressed }) => [styles.button, pressed && styles.pressed]}
+        onPress={onPress}
+      >
+        <Text style={styles.text}>{children}</Text>
+      </Pressable>
+    );
+  }
 
 export default Button
 

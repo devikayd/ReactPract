@@ -10,6 +10,7 @@ import AllPlacesScreen from './screens/AllPlacesScreen';
 import IconButton from './components/Button/IconButton';
 import AddPlaces from './screens/AddPlaces'
 import MapScreen from './screens/MapScreen'
+import PlaceDetailsScreen from './screens/PlaceDetailsScreen';
 import { init } from './utils/Database';
 
 const Stack = createNativeStackNavigator();
@@ -17,7 +18,7 @@ const Stack = createNativeStackNavigator();
 export default function App() {
 
   const [dbInitialized, setDbInitialized] = useState(false);
-
+// intializing db
   useEffect(() => {
     init()
       .then(() => {
@@ -64,8 +65,13 @@ export default function App() {
           <Stack.Screen name='Map'
             component={MapScreen}
             options={{
-              title: ' Select Location'
+              title: ' Map'
             }} />
+
+            <Stack.Screen name='Place Details' component={PlaceDetailsScreen}
+               options={{
+                title:'Place details'
+               }} />
 
         </Stack.Navigator>
       </NavigationContainer>
@@ -73,11 +79,4 @@ export default function App() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+

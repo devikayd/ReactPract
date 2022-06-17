@@ -4,40 +4,44 @@ import React, { useState, useCallback } from 'react'
 import ImagePicker from './ImagePicker';
 import LocationPicker from './LocationPicker';
 import Button from './Button/Button';
-import { Places } from '../models/Places';
+import { Place } from '../models/Place';
 
-const PlaceForm = ({onCreatePlace}) => {
+const PlaceForm = ({ onCreatePlace }) => {
 
-    const [textInput, setTextInput] = useState('');
-    const [takedImage, setTakedImage] = useState();
+    const [enteredTitle, setEnteredTitle] = useState('');
+    const [selectedImage, setSelectedImage] = useState();
     const [pickedLocation, setPickedLocation] = useState();
 
-    function textInputHandler(textInput) {
-        setTextInput(textInput);
+    function changeTitleHandler(enteredText) {
+        setEnteredTitle(enteredText);
     }
-    function takeImageHandler(imageUri) {
-        setTakedImage(imageUri);
-    }
-    const pickLocationHandler = useCallback((location) => {
-        setPickedLocation(location)
-    },[]);
 
-    function savePlaceFormHandler() { 
-        const placeData = new Places(textInput, takedImage, pickedLocation)
+    function takeImageHandler(imageUri) {
+        setSelectedImage(imageUri);
+    }
+
+    const pickLocationHandler = useCallback((location) => {
+        setPickedLocation(location);
+    }, []);
+
+    function savePlaceHandler() {
+        const placeData = new  Place(enteredTitle, selectedImage, pickedLocation);
         onCreatePlace(placeData);
-   }
+    }
+
 
 
     return (
         <ScrollView style={styles.form}>
             <View>
                 <Text style={styles.textContainer}>Title</Text>
-                <TextInput onChangeText={textInputHandler} value={textInput} style={styles.inputField} />
+                <TextInput onChangeText={changeTitleHandler}
+                    value={enteredTitle} style={styles.inputField} />
             </View>
             {/* passing data from image picker and location picker  */}
             <ImagePicker onTakeImage={takeImageHandler} />
             <LocationPicker onPickLocation={pickLocationHandler} />
-            <Button onPress={savePlaceFormHandler} >Add Place</Button>
+            <Button onPress={savePlaceHandler} >Add Place</Button>
         </ScrollView>
     )
 }

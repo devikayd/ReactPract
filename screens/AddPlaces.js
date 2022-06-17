@@ -1,14 +1,17 @@
-import React from 'react'
-import PlaceForm from '../components/PlaceForm'
+import PlaceForm from "../components/PlaceForm";
+import { insertPlace } from "../utils/Database";
 
-const AddPlaces = ({navigation}) => {
 
-function createPlaceHandler(place){
-    navigation.navigate('All places', {place: place});
+function AddPlace({ navigation }) {
+  // inserting data into db
+  async function createPlaceHandler(place) {
+    await insertPlace(place);
+    navigation.navigate('All Places', {
+      place: place
+    });
   }
-  return (
-    <PlaceForm onCreatePlace={createPlaceHandler} /> 
-  )
+
+  return <PlaceForm onCreatePlace={createPlaceHandler} />;
 }
 
-export default AddPlaces
+export default AddPlace;

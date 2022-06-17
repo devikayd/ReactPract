@@ -1,6 +1,7 @@
 import { View, Text, Alert, Image, StyleSheet } from 'react-native'
 import { launchCameraAsync, useCameraPermissions, PermissionStatus } from 'expo-image-picker'
 import { useState } from 'react';
+
 import ButtonOutline from './Button/ButtonOutline';
 
 
@@ -8,33 +9,35 @@ const ImagePicker = ({onTakeImage}) => {
 
   // for ios stumulator ...import useCameraPermissions and PermissionStatus hooks
 
-  const [cameraPermissionInformation, requestpermisssion] = useCameraPermissions();
+  const [cameraPermissionInformation, requestPermisssion] = useCameraPermissions();
   const [pickedImage, setPickedImage] = useState();
 
 
-  async function verifyPermission() {
+  async function verifyPermissions() {
     if (cameraPermissionInformation.status === PermissionStatus.UNDETERMINED) {
-      const permissionResponse = await requestpermisssion();
+      const permissionResponse = await requestPermisssion();
       return permissionResponse.granted;
     }
 
     if (cameraPermissionInformation.status === PermissionStatus.DENIED) {
-      Alert.alert('Insufficient Permission', 'You need to grant Permission to use this app');
+      Alert.alert('Insufficient Permission', 
+      'You need to grant Permission to use this app'
+      );
       return false;
     }
     return true;
   }
 
 
-  async function imagePickerHander() {
+  async function takeImageHandler() {
 
     // checking permission for ios
 
-    // const hasPermisssion = await verifyPermission();
+    const hasPermisssion = await verifyPermissions();
 
-    // if (!hasPermisssion) {
-    //   return;
-    // }
+    if (!hasPermisssion) {
+      return;
+    }
     
     // for android
 
@@ -48,18 +51,18 @@ const ImagePicker = ({onTakeImage}) => {
     onTakeImage(image.uri);
   }
 
-  let imagePicked = <Text style={styles.text} > No image is Taken yet </Text>
+  let imagePreview = <Text style={styles.text} > No image is Taken yet </Text>
 
   if (pickedImage) {
-    imagePicked = <Image style={styles.imagePreview} source={{ uri: pickedImage }} />
+    imagePreview = <Image style={styles.imagePreview} source={{ uri: pickedImage }} />
   }
 
   return (
     <View >
       <View style={styles.noImage }>
-        {imagePicked}
+        {imagePreview}
       </View>
-      <ButtonOutline onPress={imagePickerHander} color='#d4a373' size={24} icon='camera'>
+      <ButtonOutline onPress={takeImageHandler} color='#d4a373' size={24} icon='camera'>
       Take Image
       </ButtonOutline>
     </View>

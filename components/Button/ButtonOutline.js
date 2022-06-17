@@ -4,7 +4,9 @@ import {Text, StyleSheet, Pressable} from 'react-native'
 
 const ButtonOutline = ({children, onPress, color, size, icon}) => {
   return (
-    <Pressable style={({pressed}) => [styles.button, pressed && styles.pressed]} onPress={onPress} >
+    <Pressable style={({pressed}) => [styles.button, pressed && styles.pressed]}
+     onPress={onPress} 
+     >
         <Ionicons style={styles.icon} name={icon} color={color} size={size} />
         <Text style={styles.text}>{children}</Text>
     </Pressable>

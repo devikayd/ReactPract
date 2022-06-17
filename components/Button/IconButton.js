@@ -11,7 +11,7 @@ const IconButton = ({ icon, size, color, onPress }) => {
     )
 }
 
-
+export default IconButton;
 
 const styles = StyleSheet.create({
     pressed: {
@@ -25,4 +25,3 @@ const styles = StyleSheet.create({
       },
 })
 
-export default IconButton
