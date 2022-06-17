@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useIsFocused } from '@react-navigation/native';
 
 import PlacesList from '../components/PlaceList'
+import { fetchPlaces } from '../utils/Database';
 
 function AllPlaces({ route }) {
   const [loadedPlaces, setLoadedPlaces] = useState([]);
