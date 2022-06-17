@@ -14,12 +14,12 @@ export async function getAddress(lat, lng){
 
     const response = await fetch(url);
 
-    if(!response.OK){
+    if(!response.ok){
         throw new Error('Failed to fetch address')
     }
 
     const data = await response.json();
-    const address = data.result[0].formatted_address;
+    const address = data.results[0].formatted_address;
     return address;
 
 }

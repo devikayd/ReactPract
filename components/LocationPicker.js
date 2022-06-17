@@ -13,11 +13,8 @@ const LocationPicker = ({ onPickLocation }) => {
     const route = useRoute();
     const isFocused = useIsFocused();
 
-    // const [locationPermissionInformation, requestLocation] = useForegroundPermissions();
+    const [locationPermissionInformation, requestPermission] = useForegroundPermissions();
     const [pickedUserLocation, setPickedUserLocation] = useState();
-
-
-
 
     useEffect(() => {
         if (isFocused && route.params) {
@@ -27,7 +24,7 @@ const LocationPicker = ({ onPickLocation }) => {
             }
             setPickedUserLocation(mapPickedLocation)
         }
-    }, [isFocused, route]);
+    }, [route, isFocused]);
 
     useEffect(() => {
         async function handleLocation() {
@@ -42,31 +39,31 @@ const LocationPicker = ({ onPickLocation }) => {
         handleLocation();
     }, [onPickLocation, pickedUserLocation])
 
-    // async function verifyPermission() {
-    //     if (locationPermissionInformation.status === PermissionStatus.UNDETERMINED) {
-    //         const permissionResponse = await requestLocation();
-    //         return permissionResponse.granted;
-    //     }
+    async function verifyPermission() {
+        if (locationPermissionInformation.status === PermissionStatus.UNDETERMINED) {
+            const permissionResponse = await requestPermission();
+            return permissionResponse.granted;
+        }
 
-    //     if (locationPermissionInformation.status === PermissionStatus.DENIED) {
-    //         Alert.alert('Insufficient Permission', 'you need to grant location permissions to use this app');
-    //         return false;
-    //     }
-    //     return true;
-    // }
+        if (locationPermissionInformation.status === PermissionStatus.DENIED) {
+            Alert.alert('Insufficient Permission', 'you need to grant location permissions to use this app');
+            return false;
+        }
+        return true;
+    }
 
     async function getUserLocation() {
 
-        // const hasPermission = await verifyPermission();
+        const hasPermission = await verifyPermission();
 
-        // if (!hasPermission) {
-        //     return;
-        // }
+        if (!hasPermission) {
+            return;
+        }
 
-        const currentLocation = await getCurrentPositionAsync();
+        const location = await getCurrentPositionAsync();
         setPickedUserLocation({
-            lat: currentLocation.coords.latitude,
-            lng: currentLocation.coords.longitude
+            lat: location.coords.latitude,
+            lng: location.coords.longitude
         })
         console.log('coords', pickedUserLocation.lat, pickedUserLocation.lng)
     }

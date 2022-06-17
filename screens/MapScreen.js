@@ -32,9 +32,9 @@ const MapScreen = ({ navigation }) => {
     navigation.navigate('Add Places', {
       pickedLat: selectedLocationOnMap.lat,
       pickedLng: selectedLocationOnMap.lng
-    })
-  }
-  )
+    });
+  },[navigation, selectedLocationOnMap]
+  );
 
   useLayoutEffect(() => {
     navigation.setOptions({

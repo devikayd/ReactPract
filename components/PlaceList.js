@@ -16,6 +16,7 @@ function PlaceList({ places }) {
 
     return (
         <FlatList
+            style={styles.list}
             data={places}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => <PlacesItem place={item} />}
@@ -34,5 +35,8 @@ const styles = StyleSheet.create({
     },
     textContainer:{
         fontSize: 15
-    }
+    },
+    list: {
+        margin: 24,
+      },
 })

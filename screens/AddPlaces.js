@@ -1,15 +1,13 @@
 import React from 'react'
 import PlaceForm from '../components/PlaceForm'
-import { Places } from '../models/Places';
 
 const AddPlaces = ({navigation}) => {
 
-  function createPlaceHandler(place){
+function createPlaceHandler(place){
     navigation.navigate('All places', {place: place});
   }
   return (
-    <PlaceForm onCreatePlace={createPlaceHandler} />
-    
+    <PlaceForm onCreatePlace={createPlaceHandler} /> 
   )
 }
 

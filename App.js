@@ -6,8 +6,6 @@ import { useEffect, useState } from 'react';
 import AppLoading from 'expo-app-loading';
 
 
-
-
 import AllPlacesScreen from './screens/AllPlacesScreen';
 import IconButton from './components/Button/IconButton';
 import AddPlaces from './screens/AddPlaces'
@@ -25,8 +23,8 @@ export default function App() {
       .then(() => {
         setDbInitialized(true)
       })
-      .catch((error) => { console.log('error in db init', error) })
-  }, [])
+      .catch((err) => { console.log('error in db init', err) })
+  }, []);
 
   if (!dbInitialized) {
     return <AppLoading />
