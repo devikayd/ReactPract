@@ -6,7 +6,7 @@ import LocationPicker from './LocationPicker';
 import Button from './Button/Button';
 import { Places } from '../models/Places';
 
-const PlaceForm = () => {
+const PlaceForm = ({onCreatePlace}) => {
 
     const [textInput, setTextInput] = useState('');
     const [takedImage, setTakedImage] = useState();
@@ -15,20 +15,17 @@ const PlaceForm = () => {
     function textInputHandler(textInput) {
         setTextInput(textInput);
     }
-
-    function savePlaceFormHandler() { 
-         const placeData = new Places(textInput, takedImage, pickedLocation)
-         onCreatePlace(placeData);
-    }
-
     function takeImageHandler(imageUri) {
         setTakedImage(imageUri);
     }
-
     const pickLocationHandler = useCallback((location) => {
         setPickedLocation(location)
-    }
-    )
+    },[]);
+
+    function savePlaceFormHandler() { 
+        const placeData = new Places(textInput, takedImage, pickedLocation)
+        onCreatePlace(placeData);
+   }
 
 
     return (

@@ -10,7 +10,7 @@ const AllPlacesScreen = ({route}) => {
 
   useEffect(()=>{
     if(isFocused && route.params){
-      setLocatedPlace ( currentplace => [...currentplace, route.params.place])
+      setLocatedPlace ( (currentplace ) => [...currentplace, route.params.place])
     }
   },[ isFocused, route])
   

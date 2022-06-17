@@ -13,7 +13,7 @@ const LocationPicker = ({ onPickLocation }) => {
     const route = useRoute();
     const isFocused = useIsFocused();
 
-    const [locationPermissionInformation, requestLocation] = useForegroundPermissions();
+    // const [locationPermissionInformation, requestLocation] = useForegroundPermissions();
     const [pickedUserLocation, setPickedUserLocation] = useState();
 
 
@@ -42,32 +42,33 @@ const LocationPicker = ({ onPickLocation }) => {
         handleLocation();
     }, [onPickLocation, pickedUserLocation])
 
-    async function verifyPermission() {
-        if (locationPermissionInformation.status === PermissionStatus.UNDETERMINED) {
-            const permissionResponse = await requestLocation();
-            return permissionResponse.granted;
-        }
+    // async function verifyPermission() {
+    //     if (locationPermissionInformation.status === PermissionStatus.UNDETERMINED) {
+    //         const permissionResponse = await requestLocation();
+    //         return permissionResponse.granted;
+    //     }
 
-        if (locationPermissionInformation.status === PermissionStatus.DENIED) {
-            Alert.alert('Insufficient Permission', 'you need to grant location permissions to use this app');
-            return false;
-        }
-        return true;
-    }
+    //     if (locationPermissionInformation.status === PermissionStatus.DENIED) {
+    //         Alert.alert('Insufficient Permission', 'you need to grant location permissions to use this app');
+    //         return false;
+    //     }
+    //     return true;
+    // }
 
     async function getUserLocation() {
 
-        const hasPermission = await verifyPermission();
+        // const hasPermission = await verifyPermission();
 
-        if (!hasPermission) {
-            return;
-        }
+        // if (!hasPermission) {
+        //     return;
+        // }
 
         const currentLocation = await getCurrentPositionAsync();
         setPickedUserLocation({
             lat: currentLocation.coords.latitude,
             lng: currentLocation.coords.longitude
         })
+        console.log('coords', pickedUserLocation.lat, pickedUserLocation.lng)
     }
 
     function getLocationOnMap() {
@@ -121,7 +122,8 @@ const styles = StyleSheet.create({
         alignContent: 'center'
     },
     image: {
-        width: '100%',
-        height: '100%',
+        height: 200,
+        width: 363,
+        borderRadius: 5,
     }
 })
