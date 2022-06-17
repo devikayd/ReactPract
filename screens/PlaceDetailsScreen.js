@@ -1,7 +1,7 @@
-import { View, Text } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 
-import { fetchPlaceDetails } from '../util/database';
+import { fetchPlaceDetails } from '../utils/Database';
 import ButtonOutline from '../components/Button/ButtonOutline';
 
 function PlaceDetails({ route, navigation }) {
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   address: {
-    color: Colors.primary500,
+    color: 'black',
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 16,
