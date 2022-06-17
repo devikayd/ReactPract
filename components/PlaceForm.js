@@ -21,11 +21,13 @@ const PlaceForm = ({ onCreatePlace }) => {
     }
 
     const pickLocationHandler = useCallback((location) => {
+       
         setPickedLocation(location);
     }, []);
 
     function savePlaceHandler() {
         const placeData = new Place(enteredTitle, selectedImage, pickedLocation);
+      
         onCreatePlace(placeData);
     }
 

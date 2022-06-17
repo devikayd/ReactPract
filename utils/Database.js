@@ -38,8 +38,7 @@ export function insertPlace(place) {
 
         database.transaction((tx) => {
             tx.executeSql(`
-            INSERT INTP Places (title, imageUri, address, lat, lng)
-            VALUES (?, ?, ?, ?, ?)`,
+            INSERT INTO Places (title, imageUri, address, lat, lng) VALUES (?, ?, ?, ?, ?)`,
                 [
                     place.title, place.imageUri, place.address, place.location.lat, place.location.lng
                 ],
@@ -86,7 +85,7 @@ export function fetchPlaces() {
                         );
                     }
                     resolve(places);
-                   
+
                 },
                 (_, error) => {
                     // console.log('error', error);
@@ -102,26 +101,26 @@ export function fetchPlaces() {
 
 export function fetchPlaceDetails(id) {
     const promise = new Promise((resolve, reject) => {
-      database.transaction((tx) => {
-        tx.executeSql(
-          'SELECT * FROM places WHERE id = ?',
-          [id],
-          (_, result) => {
-            const dbPlace = result.rows._array[0];
-            const place = new Place(
-              dbPlace.title,
-              dbPlace.imageUri,
-              { lat: dbPlace.lat, lng: dbPlace.lng, address: dbPlace.address },
-              dbPlace.id
+        database.transaction((tx) => {
+            tx.executeSql(
+                'SELECT * FROM places WHERE id = ?',
+                [id],
+                (_, result) => {
+                    const dbPlace = result.rows._array[0];
+                    const place = new Place(
+                        dbPlace.title,
+                        dbPlace.imageUri,
+                        { lat: dbPlace.lat, lng: dbPlace.lng, address: dbPlace.address },
+                        dbPlace.id
+                    );
+                    resolve(place);
+                },
+                (_, error) => {
+                    reject(error);
+                }
             );
-            resolve(place);
-          },
-          (_, error) => {
-            reject(error);
-          }
-        );
-      });
+        });
     });
-  
+
     return promise;
-  }
+}

@@ -61,16 +61,15 @@ const LocationPicker = ({ onPickLocation }) => {
 
     async function getLocationHandler() {
         const hasPermission = await verifyPermissions();
-
         if (!hasPermission) {
             return;
         }
-
         const location = await getCurrentPositionAsync();
         setPickedLocation({
             lat: location.coords.latitude,
             lng: location.coords.longitude,
         });
+      
     }
 
     function pickOnMapHandler() {
